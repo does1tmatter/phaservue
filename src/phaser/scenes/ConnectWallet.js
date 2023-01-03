@@ -49,7 +49,7 @@ export default class ConnectWallet extends Scene {
     buttons.on('button.click', (button, index, pointer, event) => {
       button.scaleYoyo(500, 1.2);
       if (button.name === 'connect') {
-        this.game.emit('connect', { payload: 'test' })
+        // this.game.emit('connect', { payload: 'test' })
         this.scene.start('PlayScene')
       }
     })

@@ -14,6 +14,6 @@ export default class Preloader extends Scene {
   }
 
   create () {
-    this.scene.start('ConnectWallet')
+    this.scene.start('PlayScene')
   }
 }

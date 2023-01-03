@@ -5,7 +5,7 @@ import Preload from '@/phaser/scenes/Preload'
 import ConnectWallet from '@/phaser/scenes/ConnectWallet'
 import PlayScene from '@/phaser/scenes/PlayScene'
 
-const launch = (containerId, width, height, emit) => new Phaser.Game({
+const launch = (containerId, width, height) => new Phaser.Game({
   type: Phaser.AUTO,
   width,
   height,
@@ -37,5 +37,4 @@ const launch = (containerId, width, height, emit) => new Phaser.Game({
   }
 })
 
-export default launch
 export { launch }

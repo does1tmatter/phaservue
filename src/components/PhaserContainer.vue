@@ -8,18 +8,11 @@ const fps = useFps()
 const computedWidth = computed(() => width.value * 80 / 100)
 const computedHeight = computed(() => height.value * 80 / 100)
 
-const { emit, on } = useEventBus('app')
-
 let gameInstance = null
 onMounted(() => {
   gameInstance = game.launch(containerId, computedWidth.value, computedHeight.value)
   window.addEventListener("resize", () => gameInstance.scale.resize(computedWidth.value, computedHeight.value))
   
-  gameInstance.emit = emit
-  on((event, payload) => {
-    console.log(event)
-    console.log(payload)
-  })
 })
 
 onUnmounted(() => {
