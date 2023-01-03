@@ -18,10 +18,7 @@ export default class PlayScene extends Phaser.Scene {
     this.stakingNPC.body.setSize(40, 64)
     this.stakingNPC.body.setOffset(90, 64)
     this.stakingNPC.setInteractive({ cursor: 'pointer', pixelPerfect: true })
-    this.stakingNPC.on('pointerdown', () => {
-      const distance = Phaser.Math.Distance.Between(this.player.body.x, this.player.body.y, this.stakingNPC.body.x, this.stakingNPC.body.y)
-      if (distance < 125) alert('Pressed on NPC')
-    })
+    this.stakingNPC.on('pointerdown', () => this.onStakingNPC())
 
     this.player = new Player(this, 260, 250, 'dude', true)
     this.setMapColliders(this.player, { ...map, npc: this.stakingNPC })
@@ -47,6 +44,11 @@ export default class PlayScene extends Phaser.Scene {
 
   setMapColliders (target, object) {
     Object.keys(object).forEach(key => this.physics.add.collider(target, object[key]))
+  }
+
+  onStakingNPC () {
+    const distance = Phaser.Math.Distance.Between(this.player.body.x, this.player.body.y, this.stakingNPC.body.x, this.stakingNPC.body.y)
+    if (distance < 125) alert('Pressed on NPC')
   }
 
 }
