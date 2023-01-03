@@ -1,11 +1,8 @@
-import Phaser from 'phaser'
+import NPC from '@/phaser/classes/NPC'
 
-export default class Player extends Phaser.GameObjects.Sprite {
-  constructor (scene, x, y, texturePrefix, mainCharacter) {
-    super(scene, x, y, `${texturePrefix}-idle`)
-
-    scene.add.existing(this)
-    scene.physics.world.enableBody(this, 0)
+export default class MainPlayer extends NPC {
+  constructor (scene, x, y, texturePrefix) {
+    super(scene, x, y, `${texturePrefix}`)
 
     scene.anims.create({
       key: 'left',
@@ -31,20 +28,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
       repeat: -1,
       frameRate: 15
     })
-    scene.anims.create({
-      key: 'idle',
-      frames: scene.anims.generateFrameNumbers(`${texturePrefix}-idle`, { start: 0, end: 7 }),
-      repeat: -1,
-      frameRate: 15
-    })
 
     const { LEFT, RIGHT, UP, DOWN, W, A, S, D } = Phaser.Input.Keyboard.KeyCodes
     this.keys = scene.input.keyboard.addKeys({ left: LEFT, right: RIGHT, up: UP, down: DOWN, w: W, a: A, s: S, d: D })
 
-    if (mainCharacter) {
-      scene.cameras.main.startFollow(this.body, true)
-      scene.cameras.main.setFollowOffset(-this.body.width, -this.body.height)
-    }
+    scene.cameras.main.startFollow(this.body, true)
+    scene.cameras.main.setFollowOffset(-this.body.width, -this.body.height)
   }
 
   movement() {

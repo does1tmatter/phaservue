@@ -12,7 +12,6 @@ let gameInstance = null
 onMounted(() => {
   gameInstance = game.launch(containerId, computedWidth.value, computedHeight.value)
   window.addEventListener("resize", () => gameInstance.scale.resize(computedWidth.value, computedHeight.value))
-  
 })
 
 onUnmounted(() => {

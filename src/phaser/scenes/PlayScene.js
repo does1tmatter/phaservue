@@ -1,5 +1,5 @@
 import { Scene } from 'phaser'
-import Player from '@/phaser/classes/Player'
+import MainPlayer from '@/phaser/classes/MainPlayer'
 
 export default class PlayScene extends Scene {
   constructor () {
@@ -11,7 +11,7 @@ export default class PlayScene extends Scene {
 
   create () {
     const map = this.initMap()
-    this.player = new Player(this, 260, 250, 'dude', true)
+    this.player = new MainPlayer(this, 260, 250, 'dude')
 
     this.setColliders(this.player, map)
   }
