@@ -21,8 +21,7 @@ export default class PlayScene extends Scene {
     this.stakingNPC.setInteractive()
 
     this.player = new Player(this, 260, 250, 'dude', true)
-    this.setMapColliders(this.player, map)
-    this.physics.add.collider(this.player, this.stakingNPC)
+    this.setMapColliders(this.player, { ...map, npc: this.stakingNPC })
   }
 
   update () {
