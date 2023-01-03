@@ -13,7 +13,7 @@ export default class Preloader extends Scene {
     this.load.spritesheet('dude-running', '/images/dude/running.png', { frameWidth: 64, frameHeight: 128 })
     this.load.spritesheet('wizard-idle', '/images/npc/wizard.png', { frameWidth: 230, frameHeight: 150 })
     
-    this.load.on('complete', () => this.scene.start('PlayScene'))
+    this.load.on('complete', () => this.scene.start('Town'))
   }
 
 }

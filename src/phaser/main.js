@@ -1,6 +1,5 @@
 import Phaser from 'phaser'
-import Preload from '@/phaser/scenes/Preload'
-import PlayScene from '@/phaser/scenes/PlayScene'
+import { Preload, Town } from '@/phaser/scenes'
 
 export class Game extends Phaser.Game {
   constructor (parent, width, height) {
@@ -25,7 +24,7 @@ export class Game extends Phaser.Game {
       backgroundColor: 0x50a7e8,
       scene: [
         Preload,
-        PlayScene
+        Town
       ]
     })
 

@@ -1,10 +1,9 @@
 import Phaser from 'phaser'
-import Player from '@/phaser/classes/Player'
-import NPC from '@/phaser/classes/NPC'
+import { NPC, Player } from '@/phaser/classes'
 
-export default class PlayScene extends Phaser.Scene {
+export default class Town extends Phaser.Scene {
   constructor () {
-    super({ key: 'PlayScene' })
+    super({ key: 'Town' })
 
     this.stakingNPC = null
 
