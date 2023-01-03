@@ -1,7 +1,7 @@
 import NPC from '@/phaser/classes/NPC'
 
-export default class MainPlayer extends NPC {
-  constructor (scene, x, y, texturePrefix) {
+export default class Player extends NPC {
+  constructor (scene, x, y, texturePrefix, mainCharacter) {
     super(scene, x, y, `${texturePrefix}`)
 
     scene.anims.create({
@@ -32,8 +32,10 @@ export default class MainPlayer extends NPC {
     const { LEFT, RIGHT, UP, DOWN, W, A, S, D } = Phaser.Input.Keyboard.KeyCodes
     this.keys = scene.input.keyboard.addKeys({ left: LEFT, right: RIGHT, up: UP, down: DOWN, w: W, a: A, s: S, d: D })
 
-    scene.cameras.main.startFollow(this.body, true)
-    scene.cameras.main.setFollowOffset(-this.body.width, -this.body.height)
+    if (mainCharacter) {
+      scene.cameras.main.startFollow(this.body, true)
+      scene.cameras.main.setFollowOffset(-this.body.width, -this.body.height)
+    }
   }
 
   movement() {
