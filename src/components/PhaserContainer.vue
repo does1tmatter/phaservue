@@ -1,5 +1,5 @@
 <script setup>
-const game = await import('@/phaser/main')
+const { Game } = await import('@/phaser/main')
 const containerId = 'gameContainer'
 
 const { width, height } = useWindowSize()
@@ -10,7 +10,7 @@ const computedHeight = computed(() => height.value * 80 / 100)
 
 let gameInstance = null
 onMounted(() => {
-  gameInstance = game.launch(containerId, computedWidth.value, computedHeight.value)
+  gameInstance = new Game(containerId, computedWidth.value, computedHeight.value)
   window.addEventListener("resize", () => gameInstance.scale.resize(computedWidth.value, computedHeight.value))
 })
 

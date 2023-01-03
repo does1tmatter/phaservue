@@ -15,6 +15,10 @@ export default class NPC extends Phaser.GameObjects.Sprite {
     })
 
     this.anims.play('idle', true)
+    this.body.moves = false
+    const tempSize = [this.body.width, this.body.height]
+    this.body.setSize(20, 10)
+    this.body.setOffset(tempSize[0] * 35 / 100, tempSize[1] * 75 / 100)
   }
 
 }

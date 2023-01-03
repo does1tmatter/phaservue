@@ -14,6 +14,6 @@ export default class Preloader extends Scene {
   }
 
   create () {
-    this.scene.start('PlayScene')
+    this.load.on('complete', this.scene.start('PlayScene'))
   }
 }

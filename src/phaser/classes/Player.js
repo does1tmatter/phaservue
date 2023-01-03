@@ -29,13 +29,14 @@ export default class Player extends NPC {
       frameRate: 15
     })
 
-    const { LEFT, RIGHT, UP, DOWN, W, A, S, D } = Phaser.Input.Keyboard.KeyCodes
-    this.keys = scene.input.keyboard.addKeys({ left: LEFT, right: RIGHT, up: UP, down: DOWN, w: W, a: A, s: S, d: D })
+    const { LEFT, RIGHT, UP, DOWN, W, A, S, D, SPACE } = Phaser.Input.Keyboard.KeyCodes
+    this.keys = scene.input.keyboard.addKeys({ left: LEFT, right: RIGHT, up: UP, down: DOWN, w: W, a: A, s: S, d: D, space: SPACE })
 
     if (mainCharacter) {
       scene.cameras.main.startFollow(this.body, true)
       scene.cameras.main.setFollowOffset(-this.body.width, -this.body.height)
     }
+    this.body.moves = true
   }
 
   movement() {
@@ -66,6 +67,10 @@ export default class Player extends NPC {
       this.anims.play('down', true)
     } else {
       this.anims.play('idle', true)
+    }
+
+    if (keys.space.isDown) {
+      console.log(this.body.x, this.body.y)
     }
   }
 }

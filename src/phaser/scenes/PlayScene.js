@@ -1,9 +1,12 @@
 import { Scene } from 'phaser'
 import Player from '@/phaser/classes/Player'
+import NPC from '@/phaser/classes/NPC'
 
 export default class PlayScene extends Scene {
   constructor () {
     super({ key: 'PlayScene' })
+
+    this.stakingNPC = null
 
     this.player = null
     this.keys = null
@@ -12,8 +15,11 @@ export default class PlayScene extends Scene {
   create () {
     const map = this.initMap()
     this.player = new Player(this, 260, 250, 'dude', true)
+    this.setMapColliders(this.player, map)
 
-    this.setColliders(this.player, map)
+    this.stakingNPC = new NPC(this, 1375, 200, 'dude')
+    this.stakingNPC.setInteractive()
+    this.physics.add.collider(this.player, this.stakingNPC)
   }
 
   update () {
@@ -34,7 +40,7 @@ export default class PlayScene extends Scene {
     return mapLayers
   }
 
-  setColliders (target, object) {
+  setMapColliders (target, object) {
     Object.keys(object).forEach(key => this.physics.add.collider(target, object[key]))
   }
 
