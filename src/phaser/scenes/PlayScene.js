@@ -1,8 +1,8 @@
-import { Scene } from 'phaser'
+import Phaser from 'phaser'
 import Player from '@/phaser/classes/Player'
 import NPC from '@/phaser/classes/NPC'
 
-export default class PlayScene extends Scene {
+export default class PlayScene extends Phaser.Scene {
   constructor () {
     super({ key: 'PlayScene' })
 
@@ -14,11 +14,14 @@ export default class PlayScene extends Scene {
 
   create () {
     const map = this.initMap()
-
     this.stakingNPC = new NPC(this, 1375, 200, 'wizard')
     this.stakingNPC.body.setSize(40, 64)
     this.stakingNPC.body.setOffset(90, 64)
-    this.stakingNPC.setInteractive()
+    this.stakingNPC.setInteractive({ cursor: 'pointer', pixelPerfect: true })
+    this.stakingNPC.on('pointerdown', () => {
+      const distance = Phaser.Math.Distance.Between(this.player.body.x, this.player.body.y, this.stakingNPC.body.x, this.stakingNPC.body.y)
+      if (distance < 125) alert('Pressed on NPC')
+    })
 
     this.player = new Player(this, 260, 250, 'dude', true)
     this.setMapColliders(this.player, { ...map, npc: this.stakingNPC })
