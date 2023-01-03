@@ -25,11 +25,11 @@ export default class PlayScene extends Scene {
     const map = this.make.tilemap({ key: 'world' })
     const tileSet = map.addTilesetImage('tileSet', 'worldTiles')
 
-    const mapLayers = {}
-    map.layers.forEach(layer => {
-      mapLayers[layer.name] = map.createLayer(layer.name, tileSet)
-      mapLayers[layer.name].setCollisionByProperty({ collides: true })
-    })
+    const mapLayers = map.layers.reduce((prevObj, layer) => {
+      const newLayer = map.createLayer(layer.name, tileSet)
+      newLayer.setCollisionByProperty({ collides: true })
+      return { ...prevObj, [layer.name]: newLayer }
+    }, {})
 
     return mapLayers
   }
