@@ -3,28 +3,35 @@ import NPC from '@/phaser/classes/NPC'
 export default class Player extends NPC {
   constructor (scene, x, y, texturePrefix, mainCharacter) {
     super(scene, x, y, `${texturePrefix}`)
+    this.texturePrefix = texturePrefix
 
     scene.anims.create({
-      key: 'left',
+      key: `${texturePrefix}-left`,
       frames: scene.anims.generateFrameNumbers(`${texturePrefix}-running`, { start: 8, end: 15 }),
       repeat: -1,
       frameRate: 15
     })
     scene.anims.create({
-      key: 'right',
+      key: `${texturePrefix}-right`,
       frames: scene.anims.generateFrameNumbers(`${texturePrefix}-running`, { start: 16, end: 23 }),
       repeat: -1,
       frameRate: 15
     })
     scene.anims.create({
-      key: 'up',
+      key: `${texturePrefix}-up`,
       frames: scene.anims.generateFrameNumbers(`${texturePrefix}-running`, { start: 24, end: 31 }),
       repeat: -1,
       frameRate: 15
     })
     scene.anims.create({
-      key: 'down',
+      key: `${texturePrefix}-down`,
       frames: scene.anims.generateFrameNumbers(`${texturePrefix}-running`, { start: 0, end: 7 }),
+      repeat: -1,
+      frameRate: 15
+    })
+    scene.anims.create({
+      key: `${texturePrefix}-idle`,
+      frames: scene.anims.generateFrameNumbers(`${texturePrefix}-idle`, { start: 0, end: 7 }),
       repeat: -1,
       frameRate: 15
     })
@@ -37,6 +44,8 @@ export default class Player extends NPC {
       scene.cameras.main.setFollowOffset(-this.body.width, -this.body.height)
     }
     this.body.moves = true
+    this.body.setSize(20, 10)
+
   }
 
   movement() {
@@ -58,15 +67,15 @@ export default class Player extends NPC {
     }
 
     if (keys.left.isDown || keys.a.isDown) {
-      this.anims.play('left', true)
+      this.anims.play(`${this.texturePrefix}-left`, true)
     } else if (keys.right.isDown || keys.d.isDown) {
-      this.anims.play('right', true)
+      this.anims.play(`${this.texturePrefix}-right`, true)
     } else if (keys.up.isDown || keys.w.isDown) {
-      this.anims.play('up', true)
+      this.anims.play(`${this.texturePrefix}-up`, true)
     } else if (keys.down.isDown || keys.s.isDown) {
-      this.anims.play('down', true)
+      this.anims.play(`${this.texturePrefix}-down`, true)
     } else {
-      this.anims.play('idle', true)
+      this.anims.play(`${this.texturePrefix}-idle`, true)
     }
 
     if (keys.space.isDown) {

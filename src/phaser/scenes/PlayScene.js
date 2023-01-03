@@ -14,11 +14,14 @@ export default class PlayScene extends Scene {
 
   create () {
     const map = this.initMap()
+
+    this.stakingNPC = new NPC(this, 1375, 200, 'wizard')
+    this.stakingNPC.body.setSize(40, 64)
+    this.stakingNPC.body.setOffset(90, 64)
+    this.stakingNPC.setInteractive()
+
     this.player = new Player(this, 260, 250, 'dude', true)
     this.setMapColliders(this.player, map)
-
-    this.stakingNPC = new NPC(this, 1375, 200, 'dude')
-    this.stakingNPC.setInteractive()
     this.physics.add.collider(this.player, this.stakingNPC)
   }
 
