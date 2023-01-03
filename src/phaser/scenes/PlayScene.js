@@ -3,75 +3,46 @@ import { Scene } from 'phaser'
 export default class PlayScene extends Scene {
   constructor () {
     super({ key: 'PlayScene' })
-    this.map = null
+
     this.player = null
-
-    this.ocean = null
-    this.ground = null
-    this.roads = null
-    this.walls = null
-    this.bridges = null
-    this.houses = null
-    this.misc = null
-
     this.keys = null
   }
 
   create () {
     const { LEFT, RIGHT, UP, DOWN, W, A, S, D } = Phaser.Input.Keyboard.KeyCodes
     this.keys = this.input.keyboard.addKeys({ left: LEFT, right: RIGHT, up: UP, down: DOWN, w: W, a: A, s: S, d: D })
-    this.initMap()
-    this.createDude()
-    this.physics.add.collider(this.player, this.ocean)
-    this.physics.add.collider(this.player, this.walls)
-    this.physics.add.collider(this.player, this.houses)
-    this.physics.add.collider(this.player, this.misc)
+    const map = this.initMap()
+    this.player = this.createDude()
+    this.physics.add.collider(this.player, map.ocean)
+    this.physics.add.collider(this.player, map.walls)
+    this.physics.add.collider(this.player, map.houses)
+    this.physics.add.collider(this.player, map.misc)
   }
 
   initMap() {
-    this.map = this.make.tilemap({ key: 'world' })
-    const tileSet = this.map.addTilesetImage('tileSet', 'worldTiles')
+    const map = this.make.tilemap({ key: 'world' })
+    const tileSet = map.addTilesetImage('tileSet', 'worldTiles')
 
-    this.ocean = this.map.createLayer('Ocean', tileSet)
-    this.ground = this.map.createLayer('Ground', tileSet)
-    this.roads = this.map.createLayer('Roads', tileSet)
-    this.walls = this.map.createLayer('Walls', tileSet)
-    this.misc = this.map.createLayer('Misc', tileSet)
-    this.bridges = this.map.createLayer('Bridges', tileSet)
-    this.houses = this.map.createLayer('Houses', tileSet)
+    const ocean = map.createLayer('Ocean', tileSet)
+    const ground = map.createLayer('Ground', tileSet)
+    const roads = map.createLayer('Roads', tileSet)
+    const walls = map.createLayer('Walls', tileSet)
+    const misc = map.createLayer('Misc', tileSet)
+    const bridges = map.createLayer('Bridges', tileSet)
+    const houses = map.createLayer('Houses', tileSet)
 
-    this.walls.setCollisionByProperty({ collides: true })
-    this.houses.setCollisionByProperty({ collides: true })
-    this.misc.setCollisionByProperty({ collides: true })
+    walls.setCollisionByProperty({ collides: true })
+    houses.setCollisionByProperty({ collides: true })
+    misc.setCollisionByProperty({ collides: true })
 
-    // const debugGraphics = this.add.graphics().setAlpha(0.7)
-    // this.ocean.renderDebug(debugGraphics, {
-    //   tileColor: null,
-    //   collidingTileColor: new Phaser.Display.Color(243, 234, 48, 255),
-    //   faceColor: new Phaser.Display.Color(40, 39, 37, 255)
-    // })
-    // this.walls.renderDebug(debugGraphics, {
-    //   tileColor: null,
-    //   collidingTileColor: new Phaser.Display.Color(243, 234, 48, 255),
-    //   faceColor: new Phaser.Display.Color(40, 39, 37, 255)
-    // })
-    // this.houses.renderDebug(debugGraphics, {
-    //   tileColor: null,
-    //   collidingTileColor: new Phaser.Display.Color(243, 234, 48, 255),
-    //   faceColor: new Phaser.Display.Color(40, 39, 37, 255)
-    // })
-    // this.misc.renderDebug(debugGraphics, {
-    //   tileColor: null,
-    //   collidingTileColor: new Phaser.Display.Color(243, 234, 48, 255),
-    //   faceColor: new Phaser.Display.Color(40, 39, 37, 255)
-    // })
+    return { ocean, ground, roads, walls, misc, bridges, houses }
   }
 
   createDude() {
-    this.player = this.physics.add.sprite(260, 250, 'dude-idle')
-    this.player.setCollideWorldBounds(true)
-    this.cameras.main.startFollow(this.player, true)
-    this.cameras.main.setFollowOffset(-this.player.width, -this.player.height)
+    const player = this.physics.add.sprite(260, 250, 'dude-idle')
+    player.setCollideWorldBounds(true)
+    this.cameras.main.startFollow(player, true)
+    this.cameras.main.setFollowOffset(-player.width, -player.height)
 
     this.anims.create({
       key: 'left',
@@ -104,6 +75,7 @@ export default class PlayScene extends Scene {
       frameRate: 15
     })
 
+    return player
   }
 
   update () {

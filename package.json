@@ -9,8 +9,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^9.9.0",
-    "grid-engine": "^2.24.0",
-    "phaser": "^3.55.2",
+    "phaser": "^3.60.0-beta.17",
     "phaser3-rex-plugins": "^1.1.79",
     "pinia": "^2.0.28",
     "vue": "^3.2.45",
