@@ -1,26 +1,23 @@
 import Phaser from 'phaser'
 import { NPC, Player } from '@/phaser/classes'
+import { getDistance } from '@/phaser/utils'
 
 export default class Town extends Phaser.Scene {
   constructor () {
     super({ key: 'Town' })
 
     this.stakingNPC = null
-
     this.player = null
+
     this.keys = null
   }
 
   create () {
     const map = this.initMap()
-    this.stakingNPC = new NPC(this, 1375, 200, 'wizard')
-    this.stakingNPC.body.setSize(40, 64)
-    this.stakingNPC.body.setOffset(90, 64)
-    this.stakingNPC.setInteractive({ cursor: 'pointer', pixelPerfect: true })
-    this.stakingNPC.on('pointerdown', () => this.onStakingNPC())
+    this.initStakingNPC()
 
     this.player = new Player(this, 260, 250, 'dude', true)
-    this.setMapColliders(this.player, { ...map, npc: this.stakingNPC })
+    this.setColliders(this.player, { ...map, npc: this.stakingNPC })
   }
 
   update () {
@@ -41,13 +38,25 @@ export default class Town extends Phaser.Scene {
     return mapLayers
   }
 
-  setMapColliders (target, object) {
+  setColliders (target, object) {
     Object.keys(object).forEach(key => this.physics.add.collider(target, object[key]))
   }
 
+  initStakingNPC () {
+    this.stakingNPC = new NPC(this, 1375, 200, 'wizard')
+    this.stakingNPC.body.setSize(40, 64)
+    this.stakingNPC.body.setOffset(90, 64)
+    this.stakingNPC.setInteractive({ cursor: 'pointer', pixelPerfect: true })
+    this.stakingNPC.on('pointerdown', () => this.onStakingNPC())
+  }
+
   onStakingNPC () {
-    const distance = Phaser.Math.Distance.Between(this.player.body.x, this.player.body.y, this.stakingNPC.body.x, this.stakingNPC.body.y)
-    if (distance < 125) alert('Pressed on NPC')
+    const distance = getDistance(this.player, this.stakingNPC)
+    if (distance < 125) {
+      alert('Pressed on NPC')
+    } else {
+      alert('Target out of range')
+    }
   }
 
 }
