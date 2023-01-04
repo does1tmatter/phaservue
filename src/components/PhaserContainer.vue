@@ -23,5 +23,5 @@ onUnmounted(() => {
   <pre class="fixed bottom-0 left-0 text-xs">
     {{ { fps, width, height } }}
   </pre>
-  <div :id="containerId" class="rounded-3xl overflow-hidden shadow-xl border border-white" />
+  <div :id="containerId" />
 </template>
