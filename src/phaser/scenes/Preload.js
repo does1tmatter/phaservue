@@ -4,9 +4,6 @@ export default class Preloader extends Scene {
   constructor () {
     super({ key: 'Preload' })
 
-    this.width = null
-    this.height = null
-
     this.items = {
       progressBar: null,
       progressBox: null,
@@ -65,20 +62,16 @@ export default class Preloader extends Scene {
     this.load.on('fileprogress', (file) => {
       this.items.assetText.setText(file.src)
     })
-
-    this.scale.on('resize', (arg) => this.onResize(arg))
     
     this.load.on('complete', () => {
       Object.keys(this.items).forEach(key => this.items[key].destroy())
       this.scene.start('Town')
     })
+
+    this.scale.on('resize', (arg) => this.onResize(arg))
   }
 
-  onResize (gameSize) {
-    const { width, height } = gameSize
-
-    this.cameras.resize(width, height)
-
+  onResize ({ width, height }) {
     this.items.progressBox.setPosition(width / 2 - this.boxSize.width / 2, height / 2 - this.boxSize.height / 2)
     this.items.progressBar.setPosition(width / 2 - this.barSize.width / 2, height / 2 - this.barSize.height / 2)
     this.items.loadingText.setPosition(width / 2, height / 2 - this.boxSize.height)
