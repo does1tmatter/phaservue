@@ -1,8 +1,8 @@
-import Phaser from 'phaser'
+import { Scene } from 'phaser'
 import { NPC, Player } from '@/phaser/classes'
 import { getDistance } from '@/phaser/utils'
 
-export default class Town extends Phaser.Scene {
+export default class Town extends Scene {
   constructor () {
     super({ key: 'Town' })
 
