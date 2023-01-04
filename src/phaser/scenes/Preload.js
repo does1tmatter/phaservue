@@ -27,11 +27,11 @@ export default class Preloader extends Scene {
     this.items.progressBar = this.add.graphics()
     this.items.progressBox = this.add.graphics()
     
-    this.items.progressBox.fillStyle(0x222222, 0.8).fillRect(0, 0, 320, 50)
+    this.items.progressBox.fillStyle(0x222222, 0.8).fillRect(0, 0, this.boxSize.width, this.boxSize.height)
     this.items.progressBar.fillStyle(0xffffff, 1)
 
     this.items.loadingText = this.make.text({
-      text: 'Loading...',
+      text: 'Loading',
       style: {
         font: '20px',
         fill: '#ffffff'
@@ -56,7 +56,7 @@ export default class Preloader extends Scene {
 
     this.load.on('progress', (value) => {
       this.items.percentText.setText((value * 100).toFixed() + '%')
-      this.items.progressBar.fillRect(0, 0, 300 * value, 30)
+      this.items.progressBar.fillRect(0, 0, value * this.barSize.width, this.barSize.height)
     })
                 
     this.load.on('fileprogress', (file) => {
@@ -76,7 +76,7 @@ export default class Preloader extends Scene {
     this.items.progressBar.setPosition(width / 2 - this.barSize.width / 2, height / 2 - this.barSize.height / 2)
     this.items.loadingText.setPosition(width / 2, height / 2 - this.boxSize.height)
     this.items.percentText.setPosition(width / 2, height / 2 - (this.barSize.height / 2 - 16))
-    this.items.assetText.setPosition(width / 2, height / 2 + (this.boxSize.height - 9))
+    this.items.assetText.setPosition(width / 2, height / 2 + this.boxSize.height - 9)
   }
 
 }
