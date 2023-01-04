@@ -13,7 +13,7 @@ export class Game extends Phaser.Game {
         default: 'arcade',
         arcade: {
           gravity: { x: 0 },
-          debug: false
+          debug: true
         }
       },
       scale: {

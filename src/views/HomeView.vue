@@ -5,7 +5,7 @@ import LoadingOverlay from '@/components/LoadingOverlay.vue'
 
 <template>
   <main class="flex justify-center items-center min-h-screen">
-    <div class="w-[80vw] h-[80vh] bg-[#50a7e8] rounded-3xl overflow-hidden shadow-xl border border-white relative">
+    <div class="w-[80vw] h-[80vh] bg-black rounded-3xl overflow-hidden shadow-xl border border-white relative">
       <Suspense>
         <PhaserContainer />
         <template #fallback>
