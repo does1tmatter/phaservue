@@ -6,18 +6,29 @@ export default class Town extends Scene {
   constructor () {
     super({ key: 'Town' })
 
-    this.stakingNPC = null
+    this.npcList = [
+      { 
+        type: 'StakingNPC',
+        x: 340, 
+        y: 220, 
+        texture: 'wizard', 
+        interactive: { status: true, callback: this.onStakingNPC }, 
+        methods: { body: { setSize: [40, 64], setOffset: [90, 64] } }
+      }
+    ]
+
     this.player = null
+    this.npc = {}
 
     this.keys = null
   }
 
   create () {
     const map = this.initMap()
-    this.initStakingNPC()
+    this.npc = this.initNPC(this.npcList)
 
     this.player = new Player(this, 260, 250, 'dude', true)
-    this.setColliders(this.player, { ...map, npc: this.stakingNPC })
+    this.setColliders(this.player, { ...map, ...this.npc })
   }
 
   update () {
@@ -42,16 +53,26 @@ export default class Town extends Scene {
     Object.keys(object).forEach(key => this.physics.add.collider(target, object[key]))
   }
 
-  initStakingNPC () {
-    this.stakingNPC = new NPC(this, 1375, 200, 'wizard')
-    this.stakingNPC.body.setSize(40, 64)
-    this.stakingNPC.body.setOffset(90, 64)
-    this.stakingNPC.setInteractive({ cursor: 'pointer', pixelPerfect: true })
-    this.stakingNPC.on('pointerdown', () => this.onStakingNPC())
-  }
+  initNPC (list) {
+    const npcs = {}
 
-  onStakingNPC () {
-    const distance = getDistance(this.player, this.stakingNPC)
+    list.forEach(n => {
+      npcs[n.type] = new NPC(this, n.x, n.y, n.texture)
+      if (n.interactive?.status) {
+        npcs[n.type].setInteractive({ useHandCursor: true, pixelPerfect: true })
+        npcs[n.type].on('pointerup', () => n.interactive.callback(this.player, npcs[n.type]))
+      }
+      if (n.methods) Object.keys(n.methods).forEach(key => { Object.keys(n.methods[key]).forEach(method => { npcs[n.type][key][method](...n.methods[key][method]) }) })
+    })
+
+    return npcs
+  }
+  
+  onStakingNPC (player, npc) {
+    const { x, y } = player.body
+    const { x: x1, y: y1 } = npc.body
+    const distance = getDistance(x, y, x1, y1)
+
     if (distance < 125) {
       alert('Pressed on NPC')
     } else {

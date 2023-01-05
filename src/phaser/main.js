@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import { Preload, Town } from '@/phaser/scenes'
+import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js'
 
 export class Game extends Phaser.Game {
   constructor (parent, width, height) {
@@ -25,7 +26,14 @@ export class Game extends Phaser.Game {
       scene: [
         Preload,
         Town
-      ]
+      ],
+      plugins: {
+        scene: [{
+          key: 'rexUI',
+          plugin: RexUIPlugin,
+          mapping: 'rexUI'
+        }]
+      }
     })
 
   }

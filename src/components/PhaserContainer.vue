@@ -3,7 +3,6 @@ const { Game } = await import('@/phaser/main')
 const containerId = 'gameContainer'
 
 const { width, height } = useWindowSize()
-const fps = useFps()
 
 const computedWidth = computed(() => width.value * 80 / 100)
 const computedHeight = computed(() => height.value * 80 / 100)
@@ -20,8 +19,5 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <pre class="fixed bottom-0 left-0 text-xs">
-    {{ { fps, width, height } }}
-  </pre>
   <div :id="containerId" />
 </template>
