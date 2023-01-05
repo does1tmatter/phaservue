@@ -1,6 +1,6 @@
 import { Scene } from 'phaser'
 import { NPC, Player } from '@/phaser/classes'
-import { getDistance } from '@/phaser/utils'
+import { isInRange } from '@/phaser/utils'
 
 export default class Town extends Scene {
   constructor () {
@@ -55,21 +55,11 @@ const initNPC = (scene, list) => {
   return npcs
 }
 
-const onStakingNPC = (player, npc) => {
-  const { x, y } = player.body
-  const { x: x1, y: y1 } = npc.body
-  const distance = getDistance(x, y, x1, y1)
-
-  if (distance < 125) {
-    alert(`Pressed on ${npc.name} NPC`)
-  } else {
-    alert('Target out of range')
-  }
-}
+const onStakingNPC = (player, npc) => isInRange(player, npc) ? alert(`Pressed on ${npc.name} NPC`) : alert('Target out of range')
 
 const npcList = [
-  { 
-    type: 'Staking',
+  {
+    type: 'Staker',
     x: 340, 
     y: 220, 
     texture: 'wizard', 
@@ -77,7 +67,7 @@ const npcList = [
     methods: { body: { setSize: [40, 64], setOffset: [90, 64] } }
   },
   { 
-    type: 'Mint',
+    type: 'Banker',
     x: 500, 
     y: 220, 
     texture: 'wizard', 
