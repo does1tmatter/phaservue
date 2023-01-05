@@ -1,6 +1,6 @@
 import { Scene } from 'phaser'
 import { NPC, Player } from '@/phaser/classes'
-import { isInRange } from '@/phaser/utils'
+import { onStakingNPC, onBankerNPC } from '@/phaser/scenes/events'
 
 export default class Town extends Scene {
   constructor () {
@@ -47,15 +47,13 @@ const initNPC = (scene, list) => {
     npcs[n.type] = new NPC(scene, n.x, n.y, n.texture, n.type)
     if (n.interactive?.status) {
       npcs[n.type].setInteractive({ useHandCursor: true, pixelPerfect: true })
-      npcs[n.type].on('pointerup', () => n.interactive.callback(scene.player, npcs[n.type]))
+      npcs[n.type].on('pointerup', () => n.interactive.callback(scene, scene.player, npcs[n.type]))
     }
     if (n.methods) Object.keys(n.methods).forEach(key => { Object.keys(n.methods[key]).forEach(method => { npcs[n.type][key][method](...n.methods[key][method]) }) })
   })
 
   return npcs
 }
-
-const onStakingNPC = (player, npc) => isInRange(player, npc) ? alert(`Pressed on ${npc.name} NPC`) : alert('Target out of range')
 
 const npcList = [
   {
@@ -71,7 +69,7 @@ const npcList = [
     x: 500, 
     y: 220, 
     texture: 'wizard', 
-    interactive: { status: true, callback: onStakingNPC }, 
+    interactive: { status: true, callback: onBankerNPC }, 
     methods: { body: { setSize: [40, 64], setOffset: [90, 64] } }
   },
 ]
