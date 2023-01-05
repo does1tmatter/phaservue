@@ -44,7 +44,7 @@ export default class Player extends NPC {
       scene.cameras.main.setFollowOffset(-this.body.width, -this.body.height)
     }
     this.body.moves = true
-    this.body.setSize(20, 10)
+    this.body.setSize(20, 70)
 
   }
 
