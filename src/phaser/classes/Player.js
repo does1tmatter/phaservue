@@ -4,7 +4,7 @@ export default class Player extends NPC {
   constructor (scene, x, y, texturePrefix, mainCharacter) {
     super(scene, x, y, `${texturePrefix}`)
     this.texturePrefix = texturePrefix
-
+    this.name = 'Player'
     scene.anims.create({
       key: `${texturePrefix}-left`,
       frames: scene.anims.generateFrameNumbers(`${texturePrefix}-running`, { start: 8, end: 15 }),

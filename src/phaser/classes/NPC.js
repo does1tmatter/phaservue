@@ -1,9 +1,10 @@
 import Phaser from 'phaser'
 
 export default class NPC extends Phaser.GameObjects.Sprite {
-  constructor (scene, x, y, texturePrefix) {
+  constructor (scene, x, y, texturePrefix, name) {
     super(scene, x, y, `${texturePrefix}-idle`)
     this.texturePrefix = texturePrefix
+    this.name = name
     scene.add.existing(this)
     scene.physics.world.enableBody(this, 0)
 
