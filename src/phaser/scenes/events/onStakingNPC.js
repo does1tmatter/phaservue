@@ -59,26 +59,29 @@ export default (scene, player, npc) => {
       background: scene.rexUI.add.roundRectangle(0, 0, 28, 28, 10, COLOR_RED),
       text: scene.add.text(-5, -7, 'X'),
       align: 'center'
-    }).setOrigin(0.5)
-
-    const headerButtons = scene.rexUI.add.buttons({
-      buttons: [ closeButton ],
-    }).setOrigin(0.5).layout()
-
-    Align.In.TopRight(headerButtons, scrollablePanel, -10, -10)
-    headerButtons.on('button.click', () => {
-      scrollablePanel.destroy()
-      headerButtons.destroy()
     })
+    .setInteractive({ useHandCursor: true })
+
+    closeButton.on('pointerup', () => {
+      scrollablePanel.destroy()
+    })
+
+    scene.rexUI.add.buttons({
+      buttons: [ closeButton ],
+    })
+    .layout()
+
+    Align.In.TopRight(closeButton, scrollablePanel, -10, -10)
+
 
     let timeout
     
     scrollablePanel
-      .add(headerButtons, { expand: false, align: 'center' })
+      .add(closeButton, { expand: false, align: 'center' })
       .setChildrenInteractive()
-      .on('child.click', function (child, pointer, event) {
+      .on('child.click', (button) => {
         clearTimeout(timeout)
-        print.text += `Click ${child.text}\n`;
+        print.text += `Click ${button.text}\n`;
         timeout = setTimeout(() => print.text = '', 5000)
       })
 
